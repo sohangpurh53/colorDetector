@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+        .color-box {
+            margin-top: 20px;
+        }
+        .color-box div {
+            height: 100px;
+            width: 100px;
+            display: inline-block;
+            margin: 0 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .color-info p {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Extractor</h1>
+    <form action="{% url 'extract_colors' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image"><br>
+        <input type="submit" value="Extract Main Color">
+    </form>
+    {% if main_color %}
+        <div class="color-box">
+            <h2>Main Color:</h2>
+            <div style="background-color: {{ main_color }};"></div>
+        </div>
+        <div class="color-info">
+            <p>RGB Value: {{ main_color }}</p>
+            {% if text_value %}
+                <p>Hex Value: {{ text_value }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
